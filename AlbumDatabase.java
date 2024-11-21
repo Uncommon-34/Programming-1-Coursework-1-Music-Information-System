@@ -7,7 +7,6 @@
 
 import java.io.*;
 import java.util.*;
-import javax.sound.midi.Track;
 
 public class AlbumDatabase {
 
@@ -40,9 +39,9 @@ public class AlbumDatabase {
 
           String title = trackParts[1].trim();
           if (currentAlbum != null) {
+            Duration duration = new Duration(hours, minutes, seconds);
             currentAlbum.addTrack(
-              new Track(title, new Duration(hours, minutes, seconds))
-            );
+                new Track(title, duration));
           } else {
             System.out.println("error with the album: " + line);
           }
@@ -65,17 +64,16 @@ public class AlbumDatabase {
       }
     }
 
-    // get a specific song and its duration
+    // get a specific song and its duration and the album its in
     String Song = "On the Run";
     for (Album album : albums) {
       for (Track track : album.getTracks()) {
         if (track.toString().contains(Song)) {
           System.out.println(
-            "Found Song: " +
-            Song +
-            " | it was in the album: " +
-            album.albumtitle()
-          );
+              "Found Song: " +
+                  Song +
+                  " | it was in the album: " +
+                  album.albumtitle());
           System.out.println("Track Length: " + track.toString());
         }
       }

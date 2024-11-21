@@ -4,7 +4,6 @@
 //collection of track objects
 
 import java.util.*;
-import javax.sound.midi.Track;
 
 public class Album {
 
@@ -33,24 +32,24 @@ public class Album {
   public String albumtitle() {
     StringBuilder sb = new StringBuilder();
     sb
-      .append(artist)
-      .append(" : ")
-      .append(title)
-      .append(" (")
-      .append(year)
-      .append(")");
+        .append(artist)
+        .append(" : ")
+        .append(title)
+        .append(" (")
+        .append(year)
+        .append(")");
     return sb.toString();
   }
 
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb
-      .append(artist)
-      .append(" : ")
-      .append(title)
-      .append(" (")
-      .append(year)
-      .append(")\n");
+        .append(artist)
+        .append(" : ")
+        .append(title)
+        .append(" (")
+        .append(year)
+        .append(")\n");
     tracks.forEach(track -> sb.append("  ").append(track).append("\n"));
     return sb.toString();
   }
