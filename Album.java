@@ -5,7 +5,6 @@
 
 import java.util.*;
 
-
 public class Album {
 
   private final String artist, title;
