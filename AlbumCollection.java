@@ -1,5 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class AlbumCollection {
   //store details of a colluctoin of almbums
@@ -31,4 +30,6 @@ public class AlbumCollection {
   }
 
 }
+
+
 

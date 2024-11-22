@@ -1,149 +1,183 @@
-//need too seperate the logic into methods then call the methods (abstract & encapsulated)
-//read in albums.txt
-//display in alphabetical order of artist (if artist has multiple display in ascending order of release)
-//display all albums of a given artist & give total playtime
-//display album with shortest title
-//displa details of longest track within a given album collection
-
 import java.io.*;
 import java.util.*;
 
 public class AlbumDatabase {
 
-  public static void main(String[] args) {
-    String fileName = "albums.txt";
-    List<Album> albums = new ArrayList<>();
+public static List<AlbumCollection> makeAlbumCollection(String fileName) {
+  List<String> artists = new ArrayList<>();
+  List<Album> albums = new ArrayList<>();
+  List<AlbumCollection> albumCollections = new ArrayList<>();
+  
+  try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+    String line;
+    Album currentAlbum = null;
 
-    try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
-      String line;
-      Album currentAlbum = null;
+    while ((line = reader.readLine()) != null) {
+      line = line.trim();
 
-      while ((line = reader.readLine()) != null) {
-        line = line.trim();
+      if (line.contains(" : ") && line.contains("(") && line.contains(")")) {
+        String[] parts = line.split(" : ");
+        String artist = parts[0].trim();
+        String[] albumParts = parts[1].split("\\(");
+        String albumTitle = albumParts[0].trim();
+        int year = Integer.parseInt(albumParts[1].replace(")", "").trim());
 
-        if (line.contains(" : ") && line.contains("(") && line.contains(")")) {
-          String[] parts = line.split(" : ");
-          String artist = parts[0].trim();
-          String[] albumParts = parts[1].split("\\(");
-          String albumTitle = albumParts[0].trim();
-          int year = Integer.parseInt(albumParts[1].replace(")", "").trim());
+        currentAlbum = new Album(artist, albumTitle, year);
+        albums.add(currentAlbum);
+       
+          if (artists.contains(artist)) {
 
-          currentAlbum = new Album(artist, albumTitle, year);
-          albums.add(currentAlbum);
-        } else if (line.contains(":") && line.contains(":") && line.contains(":") && line.contains(" - ")) {
-          String[] trackParts = line.split(" - ", 2);
-          String[] timeParts = trackParts[0].split(":");
-          int hours = Integer.parseInt(timeParts[0]);
-          int minutes = Integer.parseInt(timeParts[1]);
-          int seconds = Integer.parseInt(timeParts[2]);
-
-          String title = trackParts[1].trim();
-          if (currentAlbum != null) {
-            Duration duration = new Duration(hours, minutes, seconds);
-            currentAlbum.addTrack(
-                new Track(title, duration));
-          } else {
-            System.out.println("error with the album: " + line);
-          }
         } else {
-          System.out.println("Error in line format: " + line);
+          artists.add(artist);
+        }
+      } else if (
+        line.contains(":") &&
+        line.contains(":") &&
+        line.contains(":") &&
+        line.contains(" - ")
+      ) {
+        String[] trackParts = line.split(" - ", 2);
+        String[] timeParts = trackParts[0].split(":");
+        int hours = Integer.parseInt(timeParts[0]);
+        int minutes = Integer.parseInt(timeParts[1]);
+        int seconds = Integer.parseInt(timeParts[2]);
+
+        String title = trackParts[1].trim();
+        if (currentAlbum != null) {
+          Duration duration = new Duration(hours, minutes, seconds);
+          currentAlbum.addTrack(new Track(title, duration));
+        } else {
+          System.out.println("error with the album: " + line);
+        }
+      } else {
+        System.out.println("Error in line format: " + line);
+      }
+    } //while linereader not null
+  } catch (IOException e) {
+    System.out.println("Error reading file: " + e.getMessage());
+  } //Catch
+
+  AlbumCollection currentCollection = null;
+
+  for (String art : artists) {
+      currentCollection = new AlbumCollection(art);
+      for (Album album : albums) {
+        if (album.getArtist().equalsIgnoreCase(art)) {
+          currentCollection.addAlbum(album);
         }
       }
-    } catch (IOException e) {
-      System.out.println("Error reading file: " + e.getMessage());
+      albumCollections.add(currentCollection);
     }
 
-    // exarmple of usage of pased data
-    // ps: you may need to make a methord to get the parts you need
+  return albumCollections;
 
-    // // get all albums from artist
-    // String artist = "Pink Floyd";
-    // for (Album album : albums) {
-    // if (album.getArtist().equals(artist)) {
-    // System.out.println("Found album by" + artist + ": " + album);
-    // }
-    // }
+}
 
-    // // get a specific song and its duration and the album its in
-    // String Song = "On the Run";
-    // for (Album album : albums) {
-    // for (Track track : album.getTracks()) {
-    // if (track.toString().contains(Song)) {
-    // System.out.println(
-    // "Found Song: " +
-    // Song +
-    // " | it was in the album: " +
-    // album.albumtitle());
-    // System.out.println("Track Length: " + track.toString());
-    // }
-    // }
-    // }
 
-    // 1.
+ // 1.
+public static void one() {
 
-    System.out.println("\n ");
-    // 2.
+}
 
-    System.out.println("\n ");
-    // 3. Display the total play time of all Kraftwerk albums in the collection.
+ // 2.
+ public static void two() {
 
-    String targetArtist = "Kraftwerk";
-    int totalSeconds = 0;
+ }
 
-    for (Album album : albums) {
-      if (album.getArtist().equalsIgnoreCase(targetArtist)) {
-        totalSeconds += album.getTotalPlayTimeInSeconds();
-      }
+ // 3. Display the total play time of all Kraftwerk albums in the collection.
+public static void three(List<AlbumCollection> ourCollection, String artistname) {
+ int totalSeconds = 0;
+
+ for (AlbumCollection coll : ourCollection) {
+  if (coll.getArtist().equalsIgnoreCase(artistname)) {
+    List<Album> Albums = coll.getAlbums();
+    for (Album album : Albums) {
+      totalSeconds += album.getTotalPlayTimeInSeconds();
     }
+  }
+}
+ int hours = totalSeconds / 3600;
+ int minutes = (totalSeconds % 3600) / 60;
+ int seconds = totalSeconds % 60;
 
-    int hours = totalSeconds / 3600;
-    int minutes = (totalSeconds % 3600) / 60;
-    int seconds = totalSeconds % 60;
+ String formattedTime = (hours < 10 ? "0" : "") + hours + ":" +
+     (minutes < 10 ? "0" : "") + minutes + ":" +
+     (seconds < 10 ? "0" : "") + seconds;
 
-    String formattedTime = (hours < 10 ? "0" : "") + hours + ":" +
-        (minutes < 10 ? "0" : "") + minutes + ":" +
-        (seconds < 10 ? "0" : "") + seconds;
-    System.out.println("Total play time of all " + targetArtist + " albums: " + formattedTime);
+ System.out.println("Total play time of all " + artistname + " albums: " + formattedTime);
 
-    System.out.println("\n ");
-    // 4. Display the album with the shortest title
+ System.out.println("\n ");
+}
 
-    Album shortestTitleAlbum = null;
-    for (Album album : albums) {
+ // 4. Display the album with the shortest title
+public static void four(List<AlbumCollection> ourCollection) {
+ Album shortestTitleAlbum = null;
+
+ for (AlbumCollection coll : ourCollection) {
+  List<Album> Albums = coll.getAlbums();
+    for (Album album : Albums) {
       if (shortestTitleAlbum == null || album.getAlbumTitle().length() < shortestTitleAlbum.getAlbumTitle().length()) {
         shortestTitleAlbum = album;
       }
     }
-
-    if (shortestTitleAlbum != null) {
-      System.out.println("Album with the shortest title: " + shortestTitleAlbum.getAlbumTitle());
-    }
-
-    System.out.println("\n ");
-    // 5. Display the details of the longest track in the album collection.
-
-    Track longestTrack = null;
-    Album albumWithLongestTrack = null;
-
-    for (Album album : albums) {
-      for (Track track : album.getTracks()) {
-        if (longestTrack == null || track.getDuration().toSeconds() > longestTrack.getDuration().toSeconds()) {
-          longestTrack = track;
-          albumWithLongestTrack = album;
-        }
-      }
-    }
-
-    if (longestTrack != null && albumWithLongestTrack != null) {
-      System.out.println("Longest Track Details:");
-      System.out.println("Title: " + longestTrack.getTitle());
-      System.out.println("Duration: " + longestTrack.getDuration());
-      System.out.println("Album: " + albumWithLongestTrack.getAlbumTitle());
-      System.out.println("Artist: " + albumWithLongestTrack.getArtist());
-    } else {
-      System.out.println("No tracks found in the collection.");
-    }
-
-    System.out.println("\n ");
   }
+
+ if (shortestTitleAlbum != null) {
+   System.out.println("Album with the shortest title: " + shortestTitleAlbum.getAlbumTitle());
+ }
+
+ System.out.println("\n ");
 }
+
+ // 5. Display the details of the longest track in the album collection.
+public static void five(List<AlbumCollection> ourCollection) {
+ Track longestTrack = null;
+ Album albumWithLongestTrack = null;
+
+for (AlbumCollection coll : ourCollection) {
+  List<Album> Albums = coll.getAlbums();
+ for (Album album : Albums) {
+   for (Track track : album.getTracks()) {
+     if (longestTrack == null || track.getDuration().toSeconds() > longestTrack.getDuration().toSeconds()) {
+       longestTrack = track;
+       albumWithLongestTrack = album;
+     }
+   }
+ }
+}
+
+ if (longestTrack != null && albumWithLongestTrack != null) {
+   System.out.println("Longest Track Details:");
+   System.out.println("Title: " + longestTrack.getTitle());
+   System.out.println("Duration: " + longestTrack.getDuration());
+   System.out.println("Album: " + albumWithLongestTrack.getAlbumTitle());
+   System.out.println("Artist: " + albumWithLongestTrack.getArtist());
+ } else {
+   System.out.println("No tracks found in the collection.");
+ }
+}
+
+    public static void main(String[] args) {
+    List<AlbumCollection> ourCollection = null;
+
+      if(ourCollection == null) {
+        ourCollection = makeAlbumCollection("albums.txt");
+      }
+
+    three(ourCollection, "Kraftwerk");
+
+    four(ourCollection);
+
+    five(ourCollection);
+
+      //List all albums and there tracks orginised by artist
+      // for (AlbumCollection coll : ourCollection) {
+      //   System.out.println("All albums for " + coll.getArtist() + " :\n");
+      //   List<Album> Albums = coll.getAlbums();
+      //     for (Album album : Albums) {
+      //       System.out.println(album.toString());
+      //     }
+      // }
+
+  } //Main
+} //AlbumDatabase

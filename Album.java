@@ -5,6 +5,7 @@
 
 import java.util.*;
 
+
 public class Album {
 
   private final String artist, title;
@@ -58,8 +59,6 @@ public class Album {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb
-        .append(artist)
-        .append(" : ")
         .append(title)
         .append(" (")
         .append(year)
