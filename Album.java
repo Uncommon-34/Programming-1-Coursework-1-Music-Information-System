@@ -34,7 +34,7 @@ public class Album {
     int totalSeconds = 0;
 
     for (Track track : tracks) {
-      totalSeconds += track.getDuration().toSeconds();
+      totalSeconds += track.getDuration().getDurationLength();
     }
 
     return totalSeconds;

@@ -131,31 +131,40 @@ public static void four(List<AlbumCollection> ourCollection) {
 
  // 5. Display the details of the longest track in the album collection.
 public static void five(List<AlbumCollection> ourCollection) {
- Track longestTrack = null;
- Album albumWithLongestTrack = null;
+  ArrayList<Duration> comp = new ArrayList<Duration>();
+  Track longestTrack = null;
+  Album albumWithLongestTrack = null;
 
 for (AlbumCollection coll : ourCollection) {
   List<Album> Albums = coll.getAlbums();
+
  for (Album album : Albums) {
    for (Track track : album.getTracks()) {
-     if (longestTrack == null || track.getDuration().toSeconds() > longestTrack.getDuration().toSeconds()) {
-       longestTrack = track;
-       albumWithLongestTrack = album;
-     }
+    if (longestTrack == null || track.getDuration().getDurationLength() > longestTrack.getDuration().getDurationLength()) {
+      longestTrack = track;
+      albumWithLongestTrack = album;
+    }
+    Duration trackduration = track.getDuration();
+    comp.add(trackduration);
    }
  }
 }
 
- if (longestTrack != null && albumWithLongestTrack != null) {
-   System.out.println("Longest Track Details:");
-   System.out.println("Title: " + longestTrack.getTitle());
-   System.out.println("Duration: " + longestTrack.getDuration());
-   System.out.println("Album: " + albumWithLongestTrack.getAlbumTitle());
-   System.out.println("Artist: " + albumWithLongestTrack.getArtist());
- } else {
-   System.out.println("No tracks found in the collection.");
- }
+Collections.sort(comp);
+
+Duration longestdDuration = comp.getLast();
+
+if (longestTrack != null && albumWithLongestTrack != null) {
+  System.out.println("Longest Track Details:");
+  System.out.println("Title: " + longestTrack.getTitle());
+  System.out.println("Duration: " + longestdDuration.stringDuration());
+  System.out.println("Album: " + albumWithLongestTrack.getAlbumTitle());
+  System.out.println("Artist: " + albumWithLongestTrack.getArtist());
+} else {
+  System.out.println("No tracks found in the collection.");
 }
+
+System.out.println("\n ");}
 
     public static void main(String[] args) {
     List<AlbumCollection> ourCollection = null;
@@ -170,7 +179,7 @@ for (AlbumCollection coll : ourCollection) {
 
     five(ourCollection);
 
-      //List all albums and there tracks orginised by artist
+      //List all albums and there tracks orginised by artist exarmple: 
       // for (AlbumCollection coll : ourCollection) {
       //   System.out.println("All albums for " + coll.getArtist() + " :\n");
       //   List<Album> Albums = coll.getAlbums();
