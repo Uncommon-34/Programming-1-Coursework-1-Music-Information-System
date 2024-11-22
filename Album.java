@@ -29,6 +29,20 @@ public class Album {
     return tracks;
   }
 
+  public int getTotalPlayTimeInSeconds() {
+    int totalSeconds = 0;
+
+    for (Track track : tracks) {
+      totalSeconds += track.getDuration().toSeconds();
+    }
+
+    return totalSeconds;
+  }
+
+  public String getAlbumTitle() {
+    return title;
+  }
+
   public String albumtitle() {
     StringBuilder sb = new StringBuilder();
     sb

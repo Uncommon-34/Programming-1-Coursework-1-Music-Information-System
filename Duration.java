@@ -12,16 +12,18 @@ public class Duration {
     this.seconds = seconds;
   }
 
+  public int toSeconds() {
+    return hours * 3600 + minutes * 60 + seconds;
+  }
+
   public String toString() {
-    return (
-      (hours < 10 ? "0" : "") +
-      hours +
-      ":" +
-      (minutes < 10 ? "0" : "") +
-      minutes +
-      ":" +
-      (seconds < 10 ? "0" : "") +
-      seconds
-    );
+    return ((hours < 10 ? "0" : "") +
+        hours +
+        ":" +
+        (minutes < 10 ? "0" : "") +
+        minutes +
+        ":" +
+        (seconds < 10 ? "0" : "") +
+        seconds);
   }
 }

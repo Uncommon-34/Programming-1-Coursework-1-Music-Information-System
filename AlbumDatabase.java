@@ -30,7 +30,7 @@ public class AlbumDatabase {
 
           currentAlbum = new Album(artist, albumTitle, year);
           albums.add(currentAlbum);
-        } else if (line.matches("\\d+:\\d{2}:\\d{2} - .*")) {
+        } else if (line.contains(":") && line.contains(":") && line.contains(":") && line.contains(" - ")) {
           String[] trackParts = line.split(" - ", 2);
           String[] timeParts = trackParts[0].split(":");
           int hours = Integer.parseInt(timeParts[0]);
@@ -56,27 +56,94 @@ public class AlbumDatabase {
     // exarmple of usage of pased data
     // ps: you may need to make a methord to get the parts you need
 
-    // get all albums from artist
-    String artist = "Pink Floyd";
+    // // get all albums from artist
+    // String artist = "Pink Floyd";
+    // for (Album album : albums) {
+    // if (album.getArtist().equals(artist)) {
+    // System.out.println("Found album by" + artist + ": " + album);
+    // }
+    // }
+
+    // // get a specific song and its duration and the album its in
+    // String Song = "On the Run";
+    // for (Album album : albums) {
+    // for (Track track : album.getTracks()) {
+    // if (track.toString().contains(Song)) {
+    // System.out.println(
+    // "Found Song: " +
+    // Song +
+    // " | it was in the album: " +
+    // album.albumtitle());
+    // System.out.println("Track Length: " + track.toString());
+    // }
+    // }
+    // }
+
+    // 1.
+
+    System.out.println("\n ");
+    // 2.
+
+    System.out.println("\n ");
+    // 3. Display the total play time of all Kraftwerk albums in the collection.
+
+    String targetArtist = "Kraftwerk";
+    int totalSeconds = 0;
+
     for (Album album : albums) {
-      if (album.getArtist().equals(artist)) {
-        System.out.println("Found album by" + artist + ": " + album);
+      if (album.getArtist().equalsIgnoreCase(targetArtist)) {
+        totalSeconds += album.getTotalPlayTimeInSeconds();
       }
     }
 
-    // get a specific song and its duration and the album its in
-    String Song = "On the Run";
+    int hours = totalSeconds / 3600;
+    int minutes = (totalSeconds % 3600) / 60;
+    int seconds = totalSeconds % 60;
+
+    String formattedTime = (hours < 10 ? "0" : "") + hours + ":" +
+        (minutes < 10 ? "0" : "") + minutes + ":" +
+        (seconds < 10 ? "0" : "") + seconds;
+    System.out.println("Total play time of all " + targetArtist + " albums: " + formattedTime);
+
+    System.out.println("\n ");
+    // 4. Display the album with the shortest title
+
+    Album shortestTitleAlbum = null;
+    for (Album album : albums) {
+      if (shortestTitleAlbum == null || album.getAlbumTitle().length() < shortestTitleAlbum.getAlbumTitle().length()) {
+        shortestTitleAlbum = album;
+      }
+    }
+
+    if (shortestTitleAlbum != null) {
+      System.out.println("Album with the shortest title: " + shortestTitleAlbum.getAlbumTitle());
+    }
+
+    System.out.println("\n ");
+    // 5. Display the details of the longest track in the album collection.
+
+    Track longestTrack = null;
+    Album albumWithLongestTrack = null;
+
     for (Album album : albums) {
       for (Track track : album.getTracks()) {
-        if (track.toString().contains(Song)) {
-          System.out.println(
-              "Found Song: " +
-                  Song +
-                  " | it was in the album: " +
-                  album.albumtitle());
-          System.out.println("Track Length: " + track.toString());
+        if (longestTrack == null || track.getDuration().toSeconds() > longestTrack.getDuration().toSeconds()) {
+          longestTrack = track;
+          albumWithLongestTrack = album;
         }
       }
     }
+
+    if (longestTrack != null && albumWithLongestTrack != null) {
+      System.out.println("Longest Track Details:");
+      System.out.println("Title: " + longestTrack.getTitle());
+      System.out.println("Duration: " + longestTrack.getDuration());
+      System.out.println("Album: " + albumWithLongestTrack.getAlbumTitle());
+      System.out.println("Artist: " + albumWithLongestTrack.getArtist());
+    } else {
+      System.out.println("No tracks found in the collection.");
+    }
+
+    System.out.println("\n ");
   }
 }

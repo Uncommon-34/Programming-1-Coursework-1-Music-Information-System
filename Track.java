@@ -10,6 +10,14 @@ public class Track {
     this.Duration = Duration;
   }
 
+  public Duration getDuration() {
+    return Duration;
+  }
+
+  public String getTitle() {
+    return title;
+  }
+
   public String toString() {
     return Duration + " - " + title;
   }
