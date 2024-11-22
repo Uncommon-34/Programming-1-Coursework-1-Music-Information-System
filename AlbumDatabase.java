@@ -74,14 +74,14 @@ public static List<AlbumCollection> makeAlbumCollection(String fileName) {
 }
 
 
- // 1.
-public static void one() {
-
-}
-
- // 2.
+ // 2. Display the entire album collection, arranged in alphabetical order of the album artist.
+ // If more than one album exists for a given artist, they should be displayed in ascending
+ // order of the year of release (oldest Album first).
  public static void two() {
 
+
+  
+  System.out.println("\n");
  }
 
  // 3. Display the total play time of all Kraftwerk albums in the collection.
@@ -164,15 +164,12 @@ if (longestTrack != null && albumWithLongestTrack != null) {
   System.out.println("No tracks found in the collection.");
 }
 
-System.out.println("\n ");}
+System.out.println("\n ");
+}
 
     public static void main(String[] args) {
-    List<AlbumCollection> ourCollection = null;
-
-      if(ourCollection == null) {
-        ourCollection = makeAlbumCollection("albums.txt");
-      }
-
+    List<AlbumCollection> ourCollection =   makeAlbumCollection("albums.txt");
+    
     three(ourCollection, "Kraftwerk");
 
     four(ourCollection);
