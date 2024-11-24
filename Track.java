@@ -19,6 +19,6 @@ public class Track {
   }
 
   public String toString() {
-    return Duration + " - " + title;
+    return Duration.stringDuration() + " - " + title;
   }
 }

@@ -25,6 +25,10 @@ public class Album {
     return artist;
   }
 
+  public int getYear() {
+    return year;
+  }
+
   public List<Track> getTracks() {
     return tracks;
   }
@@ -62,7 +66,7 @@ public class Album {
         .append(" (")
         .append(year)
         .append(")\n");
-    tracks.forEach(track -> sb.append("  ").append(track).append("\n"));
+    tracks.forEach(track -> sb.append("   ").append(track.toString()).append("\n"));
     return sb.toString();
   }
 }
