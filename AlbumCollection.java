@@ -1,12 +1,13 @@
-import java.util.*;
+//store details of a colluctoin of almbums
+//member variable of Albums
+//methods for awnsering general queries
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AlbumCollection {
-  //store details of a colluctoin of almbums
-  //member variable of Albums
-  //methods for awnsering general queries
 
-
- private final String artist;
+  private final String artist;
   private final List<Album> albums = new ArrayList<>();
 
   public AlbumCollection(String artist) {
@@ -28,8 +29,4 @@ public class AlbumCollection {
   public String getAlbumCollectionNameString() {
     return artist;
   }
-
 }
-
-
-

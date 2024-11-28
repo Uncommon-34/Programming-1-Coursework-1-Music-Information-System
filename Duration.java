@@ -39,6 +39,7 @@ public class Duration implements Comparable<Duration> { //standardised for clase
     return hours * 3600 + minutes * 60 + seconds;
   }
 
+  @Override
   public int compareTo(Duration that) {
     if (this.getDurationLength() == that.getDurationLength()) {
       return 0;
@@ -54,22 +55,22 @@ public class Duration implements Comparable<Duration> { //standardised for clase
     Duration durationObjectOne = new Duration(0, 3, 44); //static definition, can change in the code, dont want too clutter w/ scanners
     Duration durationObjectTwo = new Duration(0, 2, 14);
 
-        //creating an array list for this test harness too allow for demonstration of compable
-        ArrayList<Duration> testArray = new ArrayList<Duration>();
-        testArray.add(durationObjectOne);
-        testArray.add(durationObjectTwo);
-        //demonstration of Comparable || This array looks like [durationObjectOne, durationObjectTwo]
-        Collections.sort(testArray); // The array now looks like [durationObjectTwo, durationObjectOne] || since its been sorted
-    
-        System.out.println(
-          "This is a test harness function for the duration class\nExample of stringDuration: \n" +
-          durationObjectOne.stringDuration() +
-          "\nExample of totalSeconds Method: \n" +
-          durationObjectOne.getDurationLength() +
-          "\nExample of the implimented Compare (compareTo & sort (low to high, in this case flipping the array of Durations)):"
-        );
-        for (Duration iDuration : testArray) {
-          System.out.println(iDuration.stringDuration());
-        }
-      }
-    } // end of Duration class
+    //creating an array list for this test harness too allow for demonstration of compable
+    ArrayList<Duration> testArray = new ArrayList<Duration>();
+    testArray.add(durationObjectOne);
+    testArray.add(durationObjectTwo);
+    //demonstration of Comparable || This array looks like [durationObjectOne, durationObjectTwo]
+    Collections.sort(testArray); // The array now looks like [durationObjectTwo, durationObjectOne] || since its been sorted
+
+    System.out.println(
+      "This is a test harness function for the duration class\nExample of stringDuration: \n" +
+      durationObjectOne.stringDuration() +
+      "\nExample of totalSeconds Method: \n" +
+      durationObjectOne.getDurationLength() +
+      "\nExample of the implimented Compare (compareTo & sort (low to high, in this case flipping the array of Durations)):"
+    );
+    for (Duration iDuration : testArray) {
+      System.out.println(iDuration.stringDuration());
+    }
+  }
+} // end of Duration class
