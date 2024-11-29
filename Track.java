@@ -3,7 +3,7 @@
 
 public class Track {
 
-  //String title & Duration duration are stored
+  //A Track Object is composed of the (str)Title & Duration
   private final String title;
   private final Duration duration;
 

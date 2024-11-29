@@ -3,7 +3,7 @@ import java.util.*;
 
 public class AlbumDatabase {
 
-  // 1 reading in the AlbumCollection from the file 'albums.txt'
+  // 1. reading in the AlbumCollection from the file 'albums.txt'
   // Method that creates a list of AlbumCollections for each artist from a file
   public static List<AlbumCollection> makeAlbumCollection(String fileName) {
     List<String> artists = new ArrayList<>(); // Stores a list of unique artist names
@@ -146,20 +146,26 @@ public class AlbumDatabase {
     List<AlbumCollection> ourCollection,
     String artistname
   ) {
+    //make a new empty int
     int totalSeconds = 0;
 
-    for (AlbumCollection coll : ourCollection) {
-      if (coll.getArtist().equalsIgnoreCase(artistname)) {
-        List<Album> Albums = coll.getAlbums();
+    //iterating over each AlbumCollection within ourCollection we get the artists name & compare
+    for (AlbumCollection collection : ourCollection) {
+      if (collection.getArtist().equalsIgnoreCase(artistname)) {
+        List<Album> Albums = collection.getAlbums();
+        //For album collections that match the desired artist we iterate over each album & use our getAlbumLength (returning seconds) function too add too the total seconds variable
         for (Album album : Albums) {
           totalSeconds += album.getAlbumLength();
         }
       }
     }
+
+    //Conversion from Duration too Total Seconds, could be a helper method
     int hours = totalSeconds / 3600;
     int minutes = (totalSeconds % 3600) / 60;
     int seconds = totalSeconds % 60;
 
+    //Defines a new string 'formattedTime' using the
     String formattedTime =
       (hours < 10 ? "0" : "") +
       hours +
@@ -170,6 +176,7 @@ public class AlbumDatabase {
       (seconds < 10 ? "0" : "") +
       seconds;
 
+    //prints the formattedTime
     System.out.println(
       "Total play time of all " + artistname + " albums: " + formattedTime
     );
@@ -183,8 +190,10 @@ public class AlbumDatabase {
   public static void displayShortestTitle(List<AlbumCollection> ourCollection) {
     Album shortestTitleAlbum = null;
 
-    for (AlbumCollection coll : ourCollection) {
-      List<Album> Albums = coll.getAlbums();
+    //iterating over ourCollection we take each AlbumCollection & for each album within them we'll check against the current
+    //shortestTitleAlbum & if they're shorter we'll update the shortestTitleAlbum.
+    for (AlbumCollection collection : ourCollection) {
+      List<Album> Albums = collection.getAlbums();
       for (Album album : Albums) {
         if (
           shortestTitleAlbum == null ||
@@ -196,12 +205,14 @@ public class AlbumDatabase {
       }
     }
 
+    //the if else statement makes sure the shortestTitleAlbum isnt empty, this can only occur if there are NO albumCollections in ourCollection
     if (shortestTitleAlbum != null) {
       System.out.println(
         "Album with the shortest title: " + shortestTitleAlbum.getAlbumTitle()
       );
+    } else {
+      System.out.println("there was a error finding the shortestTitleAlbum");
     }
-
     System.out.println("\n ");
   }
 
@@ -211,33 +222,39 @@ public class AlbumDatabase {
   public static void displayLongestDuration(
     List<AlbumCollection> ourCollection
   ) {
-    ArrayList<Duration> comp = new ArrayList<Duration>();
+    // initiate empty variables
+    ArrayList<Duration> listDuration = new ArrayList<Duration>();
     Track longestTrack = null;
     Album albumWithLongestTrack = null;
 
-    for (AlbumCollection coll : ourCollection) {
-      List<Album> Albums = coll.getAlbums();
+    //iterate over each albumCollection
+    for (AlbumCollection collection : ourCollection) {
+      List<Album> Albums = collection.getAlbums();
 
+      //for each track in each album
       for (Album album : Albums) {
         for (Track track : album.getTracks()) {
+          //we check if the the current track we're looking at is longer then the longestTrack
           if (
             longestTrack == null ||
             track.getDuration().getDurationLength() >
             longestTrack.getDuration().getDurationLength()
-          ) {
+          ) { //given the prior condition we'll update the varables
             longestTrack = track;
             albumWithLongestTrack = album;
           }
           Duration trackduration = track.getDuration();
-          comp.add(trackduration);
+          listDuration.add(trackduration);
         }
       }
     }
 
+    //Then we sort it
     //we have better methods of doing this however it seemed like an ideal place too impliment the requested compareTo method of duration
-    Collections.sort(comp);
+    Collections.sort(listDuration);
+    //The other method if used too pull the rest of the track details, too show we can use both methods!
 
-    Duration longestDuration = comp.get(comp.size() - 1); // same as getLast() but more robust
+    Duration longestDuration = listDuration.get(listDuration.size() - 1); // same as getLast() but more robust
 
     if (longestTrack != null && albumWithLongestTrack != null) {
       System.out.println("Longest Track Details:");

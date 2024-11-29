@@ -7,6 +7,7 @@ import java.util.*; //needed for lists
 
 public class Album {
 
+  //An Album Object is composed of the album's title, artist, release year (year) and a list of the the tracks its composed of
   private final String artist;
   private final String title;
   private final int year;
@@ -88,7 +89,7 @@ public class Album {
     Track trackObjectTwo = new Track("HYDRA", new Duration(0, 4, 52));
     Track trackObjectThree = new Track("VORACITY", new Duration(0, 3, 52));
 
-    //appending Tracks too the album manualy, this is normaly handled by _____________________
+    //appending Tracks too the album manualy, this is normaly handled within AlbumDatabase
     albumObject.addTrack(trackObjectOne);
     albumObject.addTrack(trackObjectTwo);
     albumObject.addTrack(trackObjectThree);

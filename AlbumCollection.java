@@ -7,26 +7,26 @@ import java.util.List;
 
 public class AlbumCollection {
 
+  //An AlbumCollection object is composed of a list of albums and the artist (this is doubled up with Album and thus we could remove one too optimise)
   private final String artist;
   private final List<Album> albums = new ArrayList<>();
 
+  //Constructor
   public AlbumCollection(String artist) {
     this.artist = artist;
   }
 
+  //Method too add an Album too the AlbumCollection's 'albums' List
   public void addAlbum(Album album) {
     albums.add(album);
   }
 
+  //Acessor methods
   public String getArtist() {
     return artist;
   }
 
   public List<Album> getAlbums() {
     return albums;
-  }
-
-  public String getAlbumCollectionNameString() {
-    return artist;
   }
 }
