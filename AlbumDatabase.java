@@ -90,7 +90,7 @@ public class AlbumDatabase {
   // it a time complexity of O(n^2)
   public static void orderedAlbumDisplay(List<AlbumCollection> ourCollection) {
     System.out.println(
-      "all albums soted in alphabetical and oldest release date order: \n"
+      "all albums sorted in alphabetical and oldest release date order: \n(Kept newline & indent of tracks for readability as this is a console output)\n"
     );
     // init an empty list for our sourted album objects
     List<Album> sortedAlbums = new ArrayList<Album>();
@@ -135,7 +135,7 @@ public class AlbumDatabase {
 
   public static void printAlbums(List<Album> sortedAlbums) { // helper method that prints the sortedAlbums
     for (Album nextAlbum : sortedAlbums) {
-      System.out.println(nextAlbum.stringAlbumInfo());
+      System.out.println(nextAlbum.stringAlbumTracks()); //can also use stringAlbumInfo if you dont want too see the tracks
     } // end of for loop
   } // end of sortedAlbums
 

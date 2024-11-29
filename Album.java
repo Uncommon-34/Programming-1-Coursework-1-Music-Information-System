@@ -64,12 +64,18 @@ public class Album {
       .append(year)
       .append(")");
     return builderObject.toString();
-  }
+  } //This has been made redundent but we're leaving it in for possible later impilimentation/reversion of the commit history
 
   //returns the album's info as a String with the tracks as the Track datatype, doesnt include the artist as its called for an album collection of a single artist
   public String stringAlbumTracks() {
     StringBuilder builderObject = new StringBuilder();
-    builderObject.append(title).append(" (").append(year).append(")\n");
+    builderObject
+      .append(artist)
+      .append(" : ")
+      .append(title)
+      .append(" (")
+      .append(year)
+      .append(")\n");
     tracks.forEach(track ->
       builderObject.append("  ").append(track.stringTrack()).append("\n")
     );
